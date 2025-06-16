@@ -24,35 +24,44 @@ public class CustomerController {
 	}
 
 	@GetMapping("/customers/{id}")
-	ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
+	ResponseEntity<CustomerResponse> getCustomer(@PathVariable Long id) {
 		return this.customerRepository.findById(id)
+			.map(CustomerResponse::from)
 			.map(ResponseEntity::ok)
 			.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@GetMapping(path = "/customers")
-	List<Customer> getCustomers() {
-		return this.customerRepository.findAllOrderById();
+	List<CustomerResponse> getCustomers() {
+		return this.customerRepository.findAllOrderById().stream().map(CustomerResponse::from).toList();
 	}
 
 	@PostMapping(path = "/customers")
 	@ResponseStatus(HttpStatus.CREATED)
-	Customer createCustomer(@RequestBody Customer customer) {
-		return this.customerRepository.save(customer);
+	CustomerResponse createCustomer(@RequestBody Customer customer) {
+		Customer saved = this.customerRepository.save(customer);
+		return CustomerResponse.from(saved);
 	}
 
 	@PatchMapping(path = "/customers/{id}")
-	ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody PatchCustomerRequest request) {
-		return this.customerRepository.findById(id)
-			.map(existingCustomer -> ResponseEntity
-				.ok(this.customerRepository.save(existingCustomer.withName(request.name()))))
-			.orElseGet(() -> ResponseEntity.notFound().build());
+	ResponseEntity<CustomerResponse> updateCustomer(@PathVariable Long id, @RequestBody PatchCustomerRequest request) {
+		return this.customerRepository.findById(id).map(existingCustomer -> {
+			Customer saved = this.customerRepository.save(existingCustomer.withName(request.name()));
+			return ResponseEntity.ok(CustomerResponse.from(saved));
+		}).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@DeleteMapping(path = "/customers/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	void deleteCustomer(@PathVariable Long id) {
 		this.customerRepository.deleteById(id);
+	}
+
+	record CustomerResponse(Long id, String name) {
+
+		static CustomerResponse from(Customer customer) {
+			return new CustomerResponse(customer.getId(), customer.getName());
+		}
 	}
 
 	record PatchCustomerRequest(String name) {

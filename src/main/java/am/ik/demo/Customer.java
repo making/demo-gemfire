@@ -1,8 +1,11 @@
 package am.ik.demo;
 
 import java.util.Objects;
+import org.apache.geode.pdx.PdxReader;
+import org.apache.geode.pdx.PdxSerializable;
+import org.apache.geode.pdx.PdxWriter;
 
-public class Customer {
+public class Customer implements PdxSerializable {
 
 	private Long id;
 
@@ -51,6 +54,18 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer{" + "id=" + id + ", name='" + name + '\'' + '}';
+	}
+
+	@Override
+	public void toData(PdxWriter pdxWriter) {
+		pdxWriter.writeLong("id", this.getId());
+		pdxWriter.writeString("name", this.getName());
+	}
+
+	@Override
+	public void fromData(PdxReader pdxReader) {
+		this.setId(pdxReader.readLong("id"));
+		this.setName(pdxReader.readString("name"));
 	}
 
 }
