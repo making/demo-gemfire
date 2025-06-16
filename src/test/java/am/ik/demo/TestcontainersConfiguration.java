@@ -18,8 +18,7 @@ class TestcontainersConfiguration {
 
 	@Bean
 	DynamicPropertyRegistrar dynamicPropertyRegistrar(GemFireCluster cluster) {
-		return registry -> registry.add("spring.data.gemfire.pool.locators",
-				() -> "127.0.0.1[%d]".formatted(cluster.getLocatorPort()));
+		return registry -> registry.add("gemfire.locators", () -> "127.0.0.1:%d".formatted(cluster.getLocatorPort()));
 	}
 
 }

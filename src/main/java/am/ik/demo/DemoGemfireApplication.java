@@ -2,10 +2,10 @@ package am.ik.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.gemfire.config.annotation.EnableEntityDefinedRegions;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
-@EnableEntityDefinedRegions
+@ConfigurationPropertiesScan
 public class DemoGemfireApplication {
 
 	public static void main(String[] args) {
