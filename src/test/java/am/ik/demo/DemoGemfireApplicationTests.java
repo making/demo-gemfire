@@ -27,7 +27,7 @@ class DemoGemfireApplicationTests {
 
 	@BeforeEach
 	void setup(@LocalServerPort int port, @Autowired RestClient.Builder restClientBuilder) {
-		this.restClient = restClientBuilder.baseUrl("http://localhost:" + port)
+		this.restClient = restClientBuilder.baseUrl("http://localhost:" + port + "/api")
 			.defaultStatusHandler(__ -> true, (req, res) -> {
 			})
 			.build();
