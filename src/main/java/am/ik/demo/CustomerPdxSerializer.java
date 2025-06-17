@@ -12,7 +12,8 @@ public class CustomerPdxSerializer implements PdxSerializer, Declarable {
 		if (!(o instanceof Customer customer)) {
 			return false;
 		}
-		customer.toData(pdxWriter);
+		pdxWriter.writeLong("id", customer.id());
+		pdxWriter.writeString("name", customer.name());
 		return true;
 	}
 
@@ -21,9 +22,7 @@ public class CustomerPdxSerializer implements PdxSerializer, Declarable {
 		if (!clazz.equals(Customer.class)) {
 			return null;
 		}
-		Customer customer = new Customer();
-		customer.fromData(pdxReader);
-		return customer;
+		return new Customer(pdxReader.readLong("id"), pdxReader.readString("name"));
 	}
 
 }

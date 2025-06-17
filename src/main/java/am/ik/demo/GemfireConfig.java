@@ -12,7 +12,8 @@ public class GemfireConfig {
 
 	@Bean
 	ClientCache clientCache(GemfireProps props) {
-		ClientCacheFactory cacheFactory = new ClientCacheFactory().set("log-level", props.logLevel());
+		ClientCacheFactory cacheFactory = new ClientCacheFactory().set("log-level", props.logLevel())
+			.setPdxSerializer(new CustomerPdxSerializer());
 		for (var locator : props.locators()) {
 			cacheFactory.addPoolLocator(locator.host(), locator.port());
 		}
