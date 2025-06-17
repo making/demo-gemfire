@@ -57,7 +57,7 @@ public class CustomerRepository {
 	}
 
 	public void deleteAll() {
-		this.region.removeAll(this.region.keySet());
+		this.region.removeAll(this.region.keySetOnServer());
 	}
 
 }
