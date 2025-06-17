@@ -27,3 +27,8 @@ orb -m gemfire-server-2 -u gemfire gfsh start server --name=server-2 --locators=
 orb -m gemfire-server-3 -u gemfire gfsh start server --name=server-3 --locators="gemfire-locator-1.orb.local[10334],gemfire-locator-2.orb.local[10334]" --hostname-for-clients=gemfire-server-3.orb.local --jmx-manager-hostname-for-clients=gemfire-server-3.orb.local --max-heap=4g --dir=/opt/gemfire --classpath=/Users/toshiaki/git/demo-gemfire/target/classes --cache-xml-file=/Users/toshiaki/git/demo-gemfire/src/test/resources/test-cache.xml
 gfsh
 ```
+
+```bash
+./mvnw clean package -DskipTests
+java -jar target/demo-gemfire-0.0.1-SNAPSHOT.jar --gemfire.locators=gemfire-locator-1.orb.local:10334,gemfire-locator-2.orb.local:10334
+```
