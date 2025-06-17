@@ -5,7 +5,10 @@
     version="1.0">
   <pdx persistent="true" read-serialized="true" disk-store-name="DEFAULT">
     <pdx-serializer>
-      <class-name>am.ik.demo.CustomerPdxSerializer</class-name>
+      <class-name>org.apache.geode.pdx.ReflectionBasedAutoSerializer</class-name>
+      <parameter name="classes">
+        <string>am.ik.demo.Customer</string>
+      </parameter>
     </pdx-serializer>
   </pdx>
   <region name="Customers">

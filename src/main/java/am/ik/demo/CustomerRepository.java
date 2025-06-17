@@ -44,7 +44,7 @@ public class CustomerRepository {
 	}
 
 	public Customer save(Customer customer) {
-		this.region.put(customer.id(), customer);
+		this.region.put(customer.getId(), customer);
 		return customer;
 	}
 
@@ -53,7 +53,7 @@ public class CustomerRepository {
 	}
 
 	public void saveAll(List<Customer> customers) {
-		this.region.putAll(customers.stream().collect(Collectors.toMap(Customer::id, Function.identity())));
+		this.region.putAll(customers.stream().collect(Collectors.toMap(Customer::getId, Function.identity())));
 	}
 
 	public void deleteAll() {

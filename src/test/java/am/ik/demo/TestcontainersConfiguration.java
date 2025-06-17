@@ -11,10 +11,7 @@ class TestcontainersConfiguration {
 	@Bean
 	GemFireCluster cluster() {
 		GemFireCluster cluster = new GemFireCluster("gemfire/gemfire:10.1-jdk21", 1, 1);
-		cluster.acceptLicense()
-			.withCacheXml(GemFireCluster.SERVER_GLOB, "/test-cache.xml")
-			.withClasspath(GemFireCluster.ALL_GLOB, "target/classes")
-			.start();
+		cluster.acceptLicense().withCacheXml(GemFireCluster.SERVER_GLOB, "/test-cache.xml").start();
 		return cluster;
 	}
 
