@@ -1,5 +1,6 @@
 package am.ik.demo;
 
+import java.util.Properties;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -13,7 +14,11 @@ public class GemfireConfig {
 
 	@Bean
 	ClientCache clientCache(GemfireProps props) {
-		ClientCacheFactory cacheFactory = new ClientCacheFactory().set("log-level", props.logLevel())
+		Properties properties = new Properties();
+		if (props.properties() != null) {
+			properties.putAll(props.properties());
+		}
+		ClientCacheFactory cacheFactory = new ClientCacheFactory(properties)
 			.setPdxSerializer(new ReflectionBasedAutoSerializer(Customer.class.getName()));
 		for (var locator : props.locators()) {
 			cacheFactory.addPoolLocator(locator.host(), locator.port());
