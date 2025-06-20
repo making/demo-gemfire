@@ -1,2 +1,2 @@
-image: ghcr.io/making/demo-gemfire@sha256:c398f89acb94d3e3fea5d696e7a117e8d38ed7456eab00058e37db0fae824041
-git_revision: 6725f2d2182707718db1b593e722fd781b3addd3
+image: ghcr.io/making/demo-gemfire@sha256:f07340bb010172cc769b2c7bc1bcca2366ccdeab74cfb30bd56f71741537e8e7
+git_revision: 69b61cc532f8b40f222786972e0332f50e6b46f5
