@@ -11,7 +11,8 @@ import org.springframework.validation.annotation.Validated;
 
 @ConfigurationProperties(prefix = "gemfire")
 @Validated
-public record GemfireProps(List<Locator> locators, Map<String, String> properties) implements Validator {
+public record GemfireProps(List<Endpoint> locators, Map<String, String> properties,
+		Endpoint sniProxy) implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -23,15 +24,15 @@ public record GemfireProps(List<Locator> locators, Map<String, String> propertie
 		ValidationUtils.rejectIfEmpty(errors, "locators", "locators.empty", "Locators must not be empty");
 	}
 
-	record Locator(String host, int port) {
+	record Endpoint(String host, int port) {
 
-		public static Locator valueOf(String hostAndPort) {
+		public static Endpoint valueOf(String hostAndPort) {
 			String[] split = hostAndPort.split(":");
 			if (split.length != 2) {
 				throw new IllegalArgumentException(
 						"Invalid locator format: " + hostAndPort + ". Expected format: host:port");
 			}
-			return new Locator(split[0], Integer.parseInt(split[1]));
+			return new Endpoint(split[0], Integer.parseInt(split[1]));
 		}
 	}
 }
