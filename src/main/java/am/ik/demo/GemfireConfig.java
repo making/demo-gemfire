@@ -5,6 +5,7 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 import org.apache.geode.cache.client.ClientRegionShortcut;
+import org.apache.geode.cache.client.proxy.ProxySocketFactories;
 import org.apache.geode.pdx.ReflectionBasedAutoSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +21,12 @@ public class GemfireConfig {
 		}
 		ClientCacheFactory cacheFactory = new ClientCacheFactory(properties)
 			.setPdxSerializer(new ReflectionBasedAutoSerializer(Customer.class.getName()));
-		for (var locator : props.locators()) {
+		for (var locator : props.endpoints()) {
 			cacheFactory.addPoolLocator(locator.host(), locator.port());
+		}
+		GemfireProps.Endpoint sniProxy = props.sniProxy();
+		if (sniProxy != null) {
+			cacheFactory.setPoolSocketFactory(ProxySocketFactories.sni(sniProxy.host(), sniProxy.port()));
 		}
 		return cacheFactory.create();
 	}
