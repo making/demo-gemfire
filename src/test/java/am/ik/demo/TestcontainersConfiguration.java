@@ -10,9 +10,10 @@ class TestcontainersConfiguration {
 
 	@Bean
 	GemFireCluster cluster() {
-		GemFireCluster cluster = new GemFireCluster("gemfire/gemfire:10.2-jdk21", 1, 2);
-		cluster.acceptLicense().start();
-		cluster.gfsh(true, "create region --name=Customers --type=PARTITION --redundant-copies=1");
+		GemFireCluster cluster = new GemFireCluster("gemfire/gemfire:10.2-jdk21", 1, 2).acceptLicense()
+			.withPdx(Customer.class.getName(), true)
+			.withGfsh(true, "create region --name=Customers --type=PARTITION_PERSISTENT --redundant-copies=1");
+		cluster.start();
 		return cluster;
 	}
 
