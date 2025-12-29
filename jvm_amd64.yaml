@@ -1,8 +1,8 @@
-image: ghcr.io/making/demo-gemfire@sha256:387505786707f9961cd4062d921ff9017ee72be101fc1e903236021e12f4dd6a
-git_revision: 0eaf854052bd99072d7d5369307acf76db84c366
+image: ghcr.io/making/demo-gemfire@sha256:e3cc7ad66a6c7b07a59e2fdd01c83b69f2ee5c4931a032da745b9cb10b8308cf
+git_revision: a460d0554768923938e5bfa3098ab8db822cd751
 deployment:
   image:
     repository: ghcr.io/making/demo-gemfire
-    digest: sha256:387505786707f9961cd4062d921ff9017ee72be101fc1e903236021e12f4dd6a
+    digest: sha256:e3cc7ad66a6c7b07a59e2fdd01c83b69f2ee5c4931a032da745b9cb10b8308cf
   podLabels:
-    github.com/revision: 0eaf854052bd99072d7d5369307acf76db84c366
+    github.com/revision: a460d0554768923938e5bfa3098ab8db822cd751
